@@ -2,3 +2,6 @@
 dsenv
 
 
+.env
+env
+/env
