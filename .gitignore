@@ -1,7 +1,6 @@
-/dsenv
 dsenv
-
-
 .env
+.DS_Store
+dist/
+
 env
-/env
