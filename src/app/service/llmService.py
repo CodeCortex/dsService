@@ -2,7 +2,7 @@ import os
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 from langchain_mistralai.chat_models import ChatMistralAI
-from app.service.Expense import Expense
+from service.Expense import Expense
 from langchain_core.utils.function_calling import convert_to_openai_tool
 from dotenv import load_dotenv, dotenv_values 
 

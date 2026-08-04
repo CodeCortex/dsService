@@ -1,5 +1,5 @@
 from flask import Flask, request,jsonify
-from app.service.messageService import MessageService
+from service.messageService import MessageService
 
 
 app = Flask(__name__)
@@ -14,7 +14,12 @@ messageService= MessageService();
 def handle_message():
     message= request.json.get('message')
     result= messageService.process_message(message)
-    return result
+    
+    if result is not None:
+        serialized_result= result.serialize();
+        return jsonify(serialized_result)
+    else:
+        return jsonify({'error': 'Invalid message format'}), 400
     
     
 @app.route('/', methods=['GET'])
