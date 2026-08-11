@@ -24,7 +24,12 @@ def handle_message():
     
 @app.route('/', methods=['GET'])
 def handle_get():
-     return jsonify({ "message": "Roshan Jaiswal (CodeCortex)"})
+     return jsonify({ "message": "Roshan Jaiswal (CodeCortex) -- ds-service"})
+ 
+ 
+@app.route("/health", methods=['GET'])
+def health_check():
+    return 'OK'
         
     
     
