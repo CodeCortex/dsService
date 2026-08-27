@@ -35,6 +35,7 @@ def handle_message():
         serialized_result= result.serialize();
         serialized_result['user_id'] = user_id
         producer.send('expense_service', serialized_result)
+        print("the data", serialized_result);
         return jsonify(serialized_result)
     else:
         return jsonify({'error': 'Invalid message format'}), 400
