@@ -3,6 +3,7 @@ from service.messageService import MessageService
 from kafka import KafkaProducer
 import json
 import os
+import jsonpickle
 
 
 
