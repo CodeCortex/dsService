@@ -24,7 +24,8 @@ class LLMService:
         ]
         )
         self.apiKey = os.getenv('OPENAI_API_KEY')
-        self.llm = ChatMistralAI(api_key=self.apiKey, model="mistral-large-latest", temperature=0)
+        self.llm = ChatMistralAI(api_key=self.apiKey, model="mistral-small-latest", temperature=0)
+        print("Mistral model:", self.llm.model)
         self.runnable = self.prompt | self.llm.with_structured_output(schema=Expense)
     
     def runLLM(self, message):
