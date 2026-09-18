@@ -42,9 +42,17 @@ def handle_message():
         return jsonify({'error': 'Invalid message format'}), 400
     
     
-@app.route('/', methods=['GET'])
+@app.route('/api/v1/developer', methods=['GET'])
 def handle_get():
-     return jsonify({ "message": "Roshan Jaiswal (CodeCortex) -- ds-service"})
+    response = {
+        "developer": "Roshan Jaiswal (CodeCortex)",
+        "contact": {
+            "linkedin": "https://www.linkedin.com/in/codecortex/",
+            "instagram": "https://www.instagram.com/codecortexx/",
+            "github": "https://github.com/CodeCortex"
+        }
+    }
+    return jsonify(response)
  
  
 @app.route("/health", methods=['GET'])
