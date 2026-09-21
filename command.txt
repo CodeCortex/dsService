@@ -8,6 +8,10 @@ python3 setup.py sdist
 
 
 
+
+ docker build -t ds-service . 
+
+
   docker exec -it kafka \                                                                                         
   /opt/kafka/bin/kafka-console-consumer.sh \
   --bootstrap-server localhost:9092 \
