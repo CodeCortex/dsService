@@ -14,6 +14,7 @@ app.config.from_pyfile('config.py')
 messageService= MessageService();
 kafka_host = os.getenv('KAFKA_HOST', 'localhost')
 kafka_port = os.getenv('KAFKA_PORT', '9092')
+secret_key= os.getenv('OPENAI_API_KEY');
 kafka_bootstrap_servers = f"{kafka_host}:{kafka_port}"
 print("Kafka server is "+kafka_bootstrap_servers)
 print("\n")
@@ -29,6 +30,7 @@ def handle_message():
     if not user_id:
         return jsonify({'error': 'x-user-id header is required'}), 400
     
+    print("User id ==== "+ user_id);
     message= request.json.get('message')
     result= messageService.process_message(message)
     
