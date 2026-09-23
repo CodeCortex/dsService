@@ -1,5 +1,6 @@
 from flask import Flask, request,jsonify
-from service.messageService import MessageService
+from .service.messageService import MessageService
+from .service.redisService import RedisService
 from kafka import KafkaProducer
 import json
 import os
@@ -11,7 +12,9 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
 
+
 messageService= MessageService();
+redisService= RedisService()
 kafka_host = os.getenv('KAFKA_HOST', 'localhost')
 kafka_port = os.getenv('KAFKA_PORT', '9092')
 secret_key= os.getenv('OPENAI_API_KEY');
@@ -32,7 +35,7 @@ def handle_message():
     
     print("User id ==== "+ user_id);
     message= request.json.get('message')
-    result= messageService.process_message(message)
+    result= messageService.process_message(user_id, message)
     
     if result is not None:
         serialized_result= result.serialize();
@@ -46,6 +49,15 @@ def handle_message():
     
 @app.route('/api/v1/developer', methods=['GET'])
 def handle_get():
+    
+    cache_key="ds-service:developer"
+    cached_response = redisService.get(cache_key)
+    if cached_response is not None:
+        print("Developer Redis cache HIT")
+        return jsonify(cached_response)
+    
+    print("Developer Redis cache MISS")
+    
     response = {
         "developer": "Roshan Jaiswal (CodeCortex)",
         "contact": {
@@ -54,6 +66,13 @@ def handle_get():
             "github": "https://github.com/CodeCortex"
         }
     }
+    
+    redisService.set(
+        cache_key,
+        response,
+        ttl=3600
+    )
+    
     return jsonify(response)
  
  
