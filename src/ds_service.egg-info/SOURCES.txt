@@ -5,6 +5,7 @@ src/app/service/Expense.py
 src/app/service/__init__.py
 src/app/service/llmService.py
 src/app/service/messageService.py
+src/app/service/redisService.py
 src/app/utils/__init__.py
 src/app/utils/messageUtil.py
 src/ds_service.egg-info/PKG-INFO
