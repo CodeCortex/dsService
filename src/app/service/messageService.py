@@ -28,9 +28,12 @@ class MessageService:
         print("Redis cache MISS")
         
         result= self.llmService.runLLM(message)
+        print("RESULT TYPE:", type(result))
+        print("SERIALIZE TYPE:", type(result.serialize()))
+        print("SERIALIZE VALUE:", result.serialize())
         
         if result is not None:
-            self.redisService.set(cache_key, result, ttl=300)
+            self.redisService.set(cache_key, result.serialize(), ttl=300)
         
         return result
         
