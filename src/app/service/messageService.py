@@ -1,6 +1,7 @@
 from app.utils.messageUtil import MessagesUtil
 from app.service.llmService import LLMService
 from app.service.redisService import RedisService
+from app.service.Expense import Expense
 
 
 class MessageService:
@@ -23,9 +24,13 @@ class MessageService:
         
         if cached_result is not None:
             print("Redis cache HIT")
-            return cached_result
+            # Redis returns dict → convert back to Expense
+            print("the hit cache -----------", cached_result)
+            print ("Expense(**cached_result) ===== ", Expense(**cached_result))
+            return Expense(**cached_result)
         
         print("Redis cache MISS")
+        
         
         result= self.llmService.runLLM(message)
         print("RESULT TYPE:", type(result))
@@ -33,7 +38,8 @@ class MessageService:
         print("SERIALIZE VALUE:", result.serialize())
         
         if result is not None:
-            self.redisService.set(cache_key, result.serialize(), ttl=300)
+            print("result.model_dump ------- ", result.model_dump());
+            self.redisService.set(cache_key, result.model_dump(), ttl=300)
         
         return result
         
